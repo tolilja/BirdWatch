@@ -74,9 +74,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BirdWatch.html" />
+    <Content Include="BirdWatchService.asmx" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\controller.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BirdItem.cs" />
+    <Compile Include="BirdWatchService.asmx.cs">
+      <DependentUpon>BirdWatchService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
