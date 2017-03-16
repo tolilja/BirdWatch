@@ -3,18 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.Reflection;
 
 namespace BirdWatch
 {
     public class BirdWatchDataFile
     {
-        public static BirdWatchData ReadBirdDataFile()
+        private static string ParseBirdName(string line)
         {
-            BirdWatchData birdWatchData = new BirdWatchData();
+            string[] stringList = line.Split(',');
+            return stringList[0];
+        }
+
+        private static int ParseBirdObservations(string line)
+        {
+            string[] stringList = line.Split(',');
+            return Int32.Parse(stringList[1]);
+        }
+
+        public static List<BirdWatchItem> Read()
+        {
+            List<BirdWatchItem> birdList = new List<BirdWatchItem>();
             try
             {
-                StreamReader reader = new StreamReader("BirdWatch.dat");
-
+                string filePath = new Uri(Path.GetDirectoryName(
+                        Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
+                StreamReader reader = new StreamReader(filePath + "\\BirdWatch.dat");
                 string line;
 
                 do
@@ -22,20 +36,43 @@ namespace BirdWatch
                     line = reader.ReadLine();
                     if (line != null)
                     {
-                        //this.dataBlock.Add(line);
+                        birdList.Add(new BirdWatchItem(
+                            BirdWatchDataFile.ParseBirdName(line),
+                            BirdWatchDataFile.ParseBirdObservations(line)));
                     }
                 }
                 while (line != null);
 
                 reader.Close();
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
-                birdWatchData.AddBirdItem("Harakka", 0);
-                birdWatchData.AddBirdItem("Varis", 0);
+                birdList.Add(new BirdWatchItem("Harakka", 0));
+                birdList.Add(new BirdWatchItem("Varis", 0));
             }
 
-            return birdWatchData;
+            return birdList;
+        }
+
+        public static void Write(List<BirdWatchItem> birdList)
+        {
+            try
+            {
+                string filePath = new Uri(Path.GetDirectoryName(
+                        Assembly.GetExecutingAssembly().CodeBase)).LocalPath;
+                StreamWriter writer = new StreamWriter(filePath + "\\BirdWatch.dat");
+
+                for (int i=0; i< birdList.Count;i++)
+                {
+                    writer.WriteLine(
+                        birdList[i].BirdName + "," + birdList[i].BirdObservations.ToString());
+                }
+                writer.Close();
+            }
+            catch (Exception)
+            {
+                // TODO
+            }
         }
     }
 }

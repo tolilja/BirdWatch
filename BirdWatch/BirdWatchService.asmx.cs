@@ -17,28 +17,59 @@ namespace BirdWatch
     [System.Web.Script.Services.ScriptService]
     public class BirdWatchService : System.Web.Services.WebService
     {
-        BirdWatchData birdWatchData;
 
         [WebMethod]
         public void GetBirdWatchData()
         {
-            birdWatchData = BirdWatchDataFile.ReadBirdDataFile();
+            List<BirdWatchItem> birdList = BirdWatchDataFile.Read();
 
             JavaScriptSerializer jsonStream = new JavaScriptSerializer();
-            Context.Response.Write(jsonStream.Serialize(birdWatchData.GetBirdItemList()));
+            Context.Response.Write(jsonStream.Serialize(birdList));
         }
 
         [WebMethod]
-        public void AddNewBirdItem(string newBirdName)
+        public void IncrementBirdObservations(string birdName)
         {
-            if(birdWatchData.AddNewBirdItem(newBirdName))
+            List<BirdWatchItem> birdList = BirdWatchDataFile.Read();
+
+            for (int i = 0; i < birdList.Count; i++)
             {
-                // add writer and UI refresh
+                if (birdList[i].BirdName == birdName)
+                {
+                    birdList[i].IncrementBirdObservations();
+                    break;
+                }
             }
-            else
+
+            BirdWatchLogFile.Write(birdName, birdList);
+            BirdWatchDataFile.Write(birdList);
+        }
+
+        [WebMethod]
+        public void AddNewBirdItem(string birdName)
+        {
+            List<BirdWatchItem> birdList = BirdWatchDataFile.Read();
+
+            for (int i = 0; i < birdList.Count; i++)
             {
-                // add handling for duplicates
+                if (birdList[i].BirdName == birdName)
+                {
+                    break;
+                }
             }
+
+            birdList.Add(new BirdWatchItem(birdName, 0));
+            BirdWatchLogFile.Write(birdName);
+            BirdWatchDataFile.Write(birdList);
+        }
+
+        [WebMethod]
+        public void GetBirdObservationReport()
+        {
+            List<string> observationList = BirdWatchLogFile.ReadObservations();
+
+            JavaScriptSerializer jsonStream = new JavaScriptSerializer();
+            Context.Response.Write(jsonStream.Serialize(observationList));
         }
     }
 }

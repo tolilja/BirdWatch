@@ -13,15 +13,27 @@
         <div ng-repeat="item in data">
             {{ item.BirdName }}
             <div>
-                {{ item.BirdCount }}
+                {{ item.BirdObservations }}
                <div>
-                   <button>Lisää havainto</button>
+                   <input type="button" value="Lisää havainto" ng-click="incrementBirdObservations(item)" />
+                   <!--<input type="button" value="Kirjoita" ng-click="writeLog()" />-->
+                   <br /><br />
                </div>
             </div>
         </div>
         <div>
-            <button>Lisää lintu</button>
+            <input type="text" ng-model="name" />
+            <br /><br />
+            <input type="button" value="Lisää lintu" ng-click="writeLog()" />
         </div>
+        <div>
+            <br /><br />
+            <input type="button" value="Raportti" ng-click="getBirdObservationReport()" />
+        </div>
+        <div ng-repeat="item in report">
+            {{ item }}
+        </div>
+
     </div>
 </body>
 </html>
