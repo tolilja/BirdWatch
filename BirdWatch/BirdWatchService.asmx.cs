@@ -17,16 +17,28 @@ namespace BirdWatch
     [System.Web.Script.Services.ScriptService]
     public class BirdWatchService : System.Web.Services.WebService
     {
+        BirdWatchData birdWatchData;
 
         [WebMethod]
-        public void GetBirdItem()
+        public void GetBirdWatchData()
         {
-            BirdItem birdItem = new BirdItem();
-            birdItem.BirdName = "Test bird";
-            birdItem.BirdCount = 0;
+            birdWatchData = BirdWatchDataFile.ReadBirdDataFile();
 
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Context.Response.Write(js.Serialize(birdItem));
+            JavaScriptSerializer jsonStream = new JavaScriptSerializer();
+            Context.Response.Write(jsonStream.Serialize(birdWatchData.GetBirdItemList()));
+        }
+
+        [WebMethod]
+        public void AddNewBirdItem(string newBirdName)
+        {
+            if(birdWatchData.AddNewBirdItem(newBirdName))
+            {
+                // add writer and UI refresh
+            }
+            else
+            {
+                // add handling for duplicates
+            }
         }
     }
 }

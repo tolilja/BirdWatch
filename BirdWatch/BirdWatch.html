@@ -10,8 +10,18 @@
 </head>
 <body ng-app="birdWatchApp">
     <div ng-controller="birdWatchController">
-        {{ bird.BirdName }}
-        {{ bird.BirdCount}}
+        <div ng-repeat="item in data">
+            {{ item.BirdName }}
+            <div>
+                {{ item.BirdCount }}
+               <div>
+                   <button>Lisää havainto</button>
+               </div>
+            </div>
+        </div>
+        <div>
+            <button>Lisää lintu</button>
+        </div>
     </div>
 </body>
 </html>

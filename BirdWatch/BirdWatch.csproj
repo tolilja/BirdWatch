@@ -84,6 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BirdItem.cs" />
+    <Compile Include="BirdWatchData.cs" />
+    <Compile Include="BirdWatchDataFile.cs" />
     <Compile Include="BirdWatchService.asmx.cs">
       <DependentUpon>BirdWatchService.asmx</DependentUpon>
       <SubType>Component</SubType>

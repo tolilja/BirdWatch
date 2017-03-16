@@ -13,9 +13,9 @@
         activate();
 
         function activate() {
-            $http.get('BirdWatchService.asmx/GetBirdItem')
+            $http.get('BirdWatchService.asmx/GetBirdWatchData')
                 .then(function (response) {
-                    $scope.bird = response.data;
+                    $scope.data = response.data;
                 });
         }
     }
