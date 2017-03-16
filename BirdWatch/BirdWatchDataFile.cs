@@ -51,6 +51,11 @@ namespace BirdWatch
                 birdList.Add(new BirdWatchItem("Varis", 0));
             }
 
+            if(birdList.Count==0)
+            {
+                birdList.Add(new BirdWatchItem("Harakka", 0));
+                birdList.Add(new BirdWatchItem("Varis", 0));
+            }
             return birdList;
         }
 

@@ -46,23 +46,32 @@ namespace BirdWatch
         }
 
         [WebMethod]
-        public void AddNewBirdItem(string birdName)
+        public string AddNewBirdItem(string birdName)
         {
             List<BirdWatchItem> birdList = BirdWatchDataFile.Read();
+            JavaScriptSerializer jsonStream = new JavaScriptSerializer();
+
+            // Validate
+            if(string.IsNullOrEmpty(birdName))
+            {
+                return "Virhe: virheellinen linnun nimi";
+            }
 
             for (int i = 0; i < birdList.Count; i++)
             {
                 if (birdList[i].BirdName == birdName)
                 {
-                    break;
+                    return "Virhe: yritit lisätä duplikaattia";
                 }
             }
 
             birdList.Add(new BirdWatchItem(birdName, 0));
             BirdWatchLogFile.Write(birdName);
             BirdWatchDataFile.Write(birdList);
+            return "OK: uusi laji lisätty";
         }
 
+  
         [WebMethod]
         public void GetBirdObservationReport()
         {

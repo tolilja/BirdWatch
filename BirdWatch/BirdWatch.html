@@ -16,7 +16,6 @@
                 {{ item.BirdObservations }}
                <div>
                    <input type="button" value="Lisää havainto" ng-click="incrementBirdObservations(item)" />
-                   <!--<input type="button" value="Kirjoita" ng-click="writeLog()" />-->
                    <br /><br />
                </div>
             </div>
@@ -24,7 +23,10 @@
         <div>
             <input type="text" ng-model="name" />
             <br /><br />
-            <input type="button" value="Lisää lintu" ng-click="writeLog()" />
+            <input type="button" value="Lisää lintu" ng-click="addNewBirdItem()" />
+            <br /><br />
+            {{ status.d }}
+            <br /><br />
         </div>
         <div>
             <br /><br />

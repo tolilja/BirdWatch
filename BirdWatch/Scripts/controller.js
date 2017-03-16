@@ -5,9 +5,9 @@
         .module('birdWatchApp')
         .controller('birdWatchController', birdWatchController);
 
-    birdWatchController.$inject = ['$scope', '$http'];
+    birdWatchController.$inject = ['$scope', '$http', '$window'];
 
-    function birdWatchController($scope, $http) {
+    function birdWatchController($scope, $http, $window) {
         $scope.title = 'birdWatchController';
         
         activate();
@@ -16,7 +16,7 @@
             $http.get('BirdWatchService.asmx/GetBirdWatchData')
                 .then(function (response) {
                     $scope.data = response.data;
-                    $scope.name = "laji";
+                    $scope.name = "Laji";
                 });
         }
 
@@ -25,8 +25,15 @@
             $http.post('BirdWatchService.asmx/IncrementBirdObservations', { birdName: item.BirdName });
         }
 
+
         $scope.addNewBirdItem = function () {
-            $http.post('BirdWatchService.asmx/AddNewBirdItem', { birdName: $scope.name });
+            $http.post('BirdWatchService.asmx/AddNewBirdItem', { birdName: $scope.name })
+                .then(function (response) {
+                    $scope.status = response.data;
+                },
+                function (response) {
+                    $scope.status = reason;
+                });
         }
 
         $scope.getBirdObservationReport = function () {
