@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
 
 namespace BirdWatch
 {
@@ -52,7 +53,7 @@ namespace BirdWatch
             JavaScriptSerializer jsonStream = new JavaScriptSerializer();
 
             // Validate
-            if(string.IsNullOrEmpty(birdName))
+            if (string.IsNullOrEmpty(birdName) || !Regex.IsMatch(birdName, @"^[a-öA-Ö]+$"))
             {
                 return "Virhe: virheellinen linnun nimi";
             }
@@ -68,7 +69,7 @@ namespace BirdWatch
             birdList.Add(new BirdWatchItem(birdName, 0));
             BirdWatchLogFile.Write(birdName);
             BirdWatchDataFile.Write(birdList);
-            return "OK: uusi laji lisätty";
+            return "";
         }
 
   

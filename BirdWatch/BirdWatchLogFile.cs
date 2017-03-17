@@ -76,9 +76,13 @@ namespace BirdWatch
                 do
                 {
                     line = reader.ReadLine();
-                    if (line != null)
+                    if (line != null) 
                     {
-                        birdReportList.Add(line);
+                        if(line.IndexOf(" - kaikki") > 0)
+                        {
+                            birdReportList.Add(line.Substring(0, line.IndexOf(" - kaikki")));
+                        }
+                        
                     }
                 }
                 while (line != null);
@@ -87,6 +91,7 @@ namespace BirdWatch
             }
             catch (FileNotFoundException)
             {
+                birdReportList.Add("Log file not found");
             }
 
             return birdReportList;

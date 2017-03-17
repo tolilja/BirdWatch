@@ -11,26 +11,27 @@
 <body ng-app="birdWatchApp">
     <div ng-controller="birdWatchController">
         <div ng-repeat="item in data">
-            {{ item.BirdName }}
+            <font size="5">{{ item.BirdName }}</font>
             <div>
-                {{ item.BirdObservations }}
+                Havainnot: {{ item.BirdObservations }} kappaletta.
                <div>
-                   <input type="button" value="Lisää havainto" ng-click="incrementBirdObservations(item)" />
+                   <input type="button" value="Lisää" ng-click="incrementBirdObservations(item)" />
                    <br /><br />
                </div>
             </div>
         </div>
         <div>
+            <font size="5">Lisää uusi laji</font>
+            <br />
             <input type="text" ng-model="name" />
-            <br /><br />
-            <input type="button" value="Lisää lintu" ng-click="addNewBirdItem()" />
-            <br /><br />
+            <br />
+            <input type="button" value="Lisää" ng-click="addNewBirdItem()" />
+            <br />
             {{ status.d }}
-            <br /><br />
         </div>
         <div>
-            <br /><br />
-            <input type="button" value="Raportti" ng-click="getBirdObservationReport()" />
+            <br />
+            <font size="5">Havaintoraportit</font>
         </div>
         <div ng-repeat="item in report">
             {{ item }}

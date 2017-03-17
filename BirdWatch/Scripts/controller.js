@@ -9,37 +9,40 @@
 
     function birdWatchController($scope, $http, $window) {
         $scope.title = 'birdWatchController';
-        
+
         activate();
 
         function activate() {
             $http.get('BirdWatchService.asmx/GetBirdWatchData')
                 .then(function (response) {
                     $scope.data = response.data;
-                    $scope.name = "Laji";
                 });
+            $http.get('BirdWatchService.asmx/GetBirdObservationReport')
+                .then(function (response) {
+                    $scope.report = response.data;
+                });
+            $scope.name = "";
         }
 
         $scope.incrementBirdObservations = function (item) {
-            item.BirdObservations++;
-            $http.post('BirdWatchService.asmx/IncrementBirdObservations', { birdName: item.BirdName });
-        }
-
-
-        $scope.addNewBirdItem = function () {
-            $http.post('BirdWatchService.asmx/AddNewBirdItem', { birdName: $scope.name })
+            $http.post('BirdWatchService.asmx/IncrementBirdObservations', { birdName: item.BirdName })
                 .then(function (response) {
                     $scope.status = response.data;
+                    activate();
                 },
                 function (response) {
                     $scope.status = reason;
                 });
         }
 
-        $scope.getBirdObservationReport = function () {
-            $http.get('BirdWatchService.asmx/GetBirdObservationReport')
+        $scope.addNewBirdItem = function () {
+            $http.post('BirdWatchService.asmx/AddNewBirdItem', { birdName: $scope.name })
                 .then(function (response) {
-                    $scope.report = response.data;
+                    $scope.status = response.data;
+                    activate();
+                },
+                function (response) {
+                    $scope.status = reason;
                 });
         }
     }
