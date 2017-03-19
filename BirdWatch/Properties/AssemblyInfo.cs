@@ -1,4 +1,13 @@
-﻿using System.Reflection;
+﻿// ----------------------------------------------------------------------------
+// <copyright file="AssemblyInfo.cs" company="N/A">
+// <![CDATA[
+//      This file is part of BirdWatch web server-client programming example.
+//      Project is open and does not hold copyright.
+//      Contact: Tommi Lilja <github@tietoparkki.fi>
+// ]]>
+// </copyright>
+// ----------------------------------------------------------------------------
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
